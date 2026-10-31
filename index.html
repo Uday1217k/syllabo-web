@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Syllabo by Saathi — AI Study Planner, Master Tutor & Visual Slide Studio</title>
+    <meta name="description"
+        content="Syllabo by Saathi: AI Syllabus Timetable Architect, Subject-Scoped Master Tutor with Labeled Diagrams, Desk Notes, and 16:9 PowerPoint Slide Studio for B.Tech, GATE & University Students. Available on Android APK, Windows & Web." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --paper: #FFFAF0;
+            --paper-2: #F5EFE2;
+            --paper-3: #FFFDF8;
+            --ink: #142033;
+            --ink-soft: #4A5B6E;
+            --teal: #0F766E;
+            --teal-deep: #0B5E57;
+            --saffron: #F59E0B;
+            --saffron-deep: #C47D08;
+            --coral: #C45C4A;
+            --rule-line: #E2D9C5;
+            --shadow-soft: 0 12px 32px rgba(20, 32, 51, 0.07);
+            --shadow-card: 0 6px 20px rgba(20, 32, 51, 0.05);
+            --radius-lg: 22px;
+            --radius-md: 14px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--paper);
+            color: var(--ink);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        .serif-heading {
+            font-family: 'Fraunces', Georgia, serif;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+        }
+
+        code,
+        pre,
+        .mono {
+            font-family: 'JetBrains Mono', Consolas, monospace;
+        }
+
+        /* Top Announcement Bar */
+        .top-banner {
+            background: var(--ink);
+            color: var(--paper-3);
+            text-align: center;
+            padding: 9px 16px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .top-banner span {
+            color: var(--saffron);
+            font-weight: 800;
+        }
+
+        /* Sticky Navbar */
+        header.navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 250, 240, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--rule-line);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .brand-title {
+            font-family: 'Fraunces', serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--ink);
+        }
+
+        .brand-badge {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid var(--rule-line);
+            background: var(--paper-2);
+            color: var(--ink-soft);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--ink);
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.15s;
+        }
+
+        .nav-links a:hover {
+            color: var(--teal-deep);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 12px 20px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.18s ease;
+            border: 1.5px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--ink);
+            color: var(--paper-3);
+        }
+
+        .btn-primary:hover {
+            background: var(--teal-deep);
+            transform: translateY(-1px);
+        }
+
+        .btn-teal {
+            background: var(--teal-deep);
+            color: #FFFFFF;
+        }
+
+        .btn-teal:hover {
+            background: #084943;
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: var(--paper-3);
+            color: var(--ink);
+            border-color: var(--rule-line);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--teal-deep);
+            background: var(--paper-2);
+        }
+
+        .btn-saffron {
+            background: rgba(245, 158, 11, 0.16);
+            color: var(--saffron-deep);
+            border-color: rgba(196, 125, 8, 0.35);
+        }
+
+        .btn-saffron:hover {
+            background: rgba(245, 158, 11, 0.26);
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 999px;
+            background: rgba(196, 125, 8, 0.14);
+            color: var(--saffron-deep);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .chip-teal {
+            background: rgba(11, 94, 87, 0.12);
+            color: var(--teal-deep);
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 56px 24px 48px;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(34px, 4.5vw, 54px);
+            line-height: 1.12;
+            margin: 14px 0 18px;
+        }
+
+        .hero p.lead {
+            font-size: 17px;
+            color: var(--ink-soft);
+            margin-bottom: 26px;
+            max-width: 600px;
+        }
+
+        /* 3-Platform Download & Web App Hub */
+        .platform-hub {
+            background: var(--paper-3);
+            border: 1.5px solid var(--rule-line);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 20px;
+        }
+
+        .platform-hub-title {
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--ink-soft);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .platform-card {
+            background: var(--paper-2);
+            border: 1.5px solid var(--rule-line);
+            border-radius: 16px;
+            padding: 14px;
+            text-decoration: none;
+            color: var(--ink);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.18s ease;
+            cursor: pointer;
+        }
+
+        .platform-card:hover {
+            border-color: var(--teal-deep);
+            background: var(--paper-3);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-card);
+        }
+
+        .platform-card.active-web {
+            background: var(--ink);
+            color: var(--paper-3);
+            border-color: var(--ink);
+        }
+
+        .platform-card.active-web .plat-sub {
+            color: #CBD5E1;
+        }
+
+        .platform-card.active-web .plat-badge {
+            background: var(--teal);
+            color: #FFFFFF;
+        }
+
+        .plat-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .plat-icon {
+            font-size: 22px;
+        }
+
+        .plat-badge {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(11, 94, 87, 0.14);
+            color: var(--teal-deep);
+        }
+
+        .plat-name {
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+
+        .plat-sub {
+            font-size: 12px;
+            color: var(--ink-soft);
+            font-weight: 500;
+        }
+
+        /* Hero Preview Notebook Card */
+        .hero-preview {
+            background: var(--paper-3);
+            border: 1.5px solid var(--rule-line);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+        }
+
+        .notebook-margin {
+            border-left: 2px solid rgba(196, 92, 74, 0.4);
+            padding-left: 18px;
+        }
+
+        .preview-flow-step {
+            background: var(--paper-2);
+            border: 1px solid var(--rule-line);
+            border-radius: 10px;
+            padding: 9px 12px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .preview-flow-step.first {
+            background: rgba(11, 94, 87, 0.12);
+            border-color: var(--teal);
+            color: var(--teal-deep);
+        }
+
+        /* Section Containers */
+        section.section-block {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 56px 24px;
+            border-top: 1px solid var(--rule-line);
+        }
+
+        .section-header {
+            max-width: 720px;
+            margin-bottom: 36px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(28px, 3.5vw, 40px);
+            margin: 10px 0 10px;
+        }
+
+        .section-header p {
+            color: var(--ink-soft);
+            font-size: 16px;
+        }
+
+        /* Interactive Built-In Web Application Studio */
+        .webapp-shell {
+            background: var(--paper-3);
+            border: 2px solid var(--teal-deep);
+            border-radius: 24px;
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+        }
+
+        .webapp-topbar {
+            background: var(--ink);
+            color: var(--paper-3);
+            padding: 14px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .webapp-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .webapp-tab {
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--paper-3);
+            border: none;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .webapp-tab.active {
+            background: var(--saffron);
+            color: var(--ink);
+        }
+
+        .webapp-body {
+            padding: 24px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--ink-soft);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .input-group input,
+        .input-group textarea,
+        .input-group select {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1.5px solid var(--rule-line);
+            background: var(--paper);
+            color: var(--ink);
+            font-family: inherit;
+            font-size: 14.5px;
+        }
+
+        .webapp-output {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 16px;
+            background: var(--paper);
+            border: 1.5px solid var(--rule-line);
+            display: none;
+        }
+
+        .webapp-output.visible {
+            display: block;
+        }
+
+        /* Feature Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--paper-3);
+            border: 1.5px solid var(--rule-line);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .feature-card h3 {
+            font-size: 21px;
+            margin: 12px 0 8px;
+        }
+
+        .feature-card p {
+            color: var(--ink-soft);
+            font-size: 14.5px;
+        }
+
+        /* Pricing Grid */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+            gap: 18px;
+        }
+
+        .price-card {
+            background: var(--paper-2);
+            border: 1.5px solid var(--rule-line);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .price-card.popular {
+            background: var(--paper-3);
+            border: 2.2px solid var(--teal-deep);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .price-amount {
+            font-family: 'Fraunces', serif;
+            font-size: 38px;
+            font-weight: 800;
+            color: var(--ink);
+            margin: 10px 0 4px;
+        }
+
+        .price-amount span {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ink-soft);
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 18px 0 22px;
+            border-top: 1px solid var(--rule-line);
+            padding-top: 16px;
+        }
+
+        .feature-list li {
+            font-size: 13.5px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            color: var(--teal-deep);
+            font-weight: 800;
+        }
+
+        /* Legal & Compliance Tabs (Razorpay KYC Mandatory) */
+        .policy-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .policy-tab-btn {
+            padding: 10px 18px;
+            border-radius: 999px;
+            border: 1.5px solid var(--rule-line);
+            background: var(--paper-2);
+            color: var(--ink);
+            font-weight: 700;
+            font-size: 13.5px;
+            cursor: pointer;
+        }
+
+        .policy-tab-btn.active {
+            background: var(--teal-deep);
+            color: #FFFFFF;
+            border-color: var(--teal-deep);
+        }
+
+        .policy-box {
+            background: var(--paper-3);
+            border: 1.5px solid var(--rule-line);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            font-size: 14.5px;
+            color: var(--ink);
+        }
+
+        .policy-box h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .policy-box h4 {
+            font-size: 16px;
+            margin: 16px 0 6px;
+            color: var(--teal-deep);
+        }
+
+        .policy-box p,
+        .policy-box ul {
+            margin-bottom: 10px;
+            color: var(--ink-soft);
+        }
+
+        .policy-box ul {
+            padding-left: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--paper-2);
+            border-top: 1px solid var(--rule-line);
+            padding: 48px 24px;
+            margin-top: 40px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 32px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--ink-soft);
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .footer-links a:hover {
+            color: var(--teal-deep);
+        }
+
+        @media (max-width: 920px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .platform-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-banner">
+        <span>SYLLABO v1.1 LIVE</span> • Available as an <span>Android APK</span>, <span>Windows Desktop App</span>, and
+        <span>Instant Web Application</span>
+    </div>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="#" class="brand">
+                <span class="brand-title">Syllabo</span>
+                <span class="brand-badge">BY SAATHI</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#downloads">Download & Web App</a></li>
+                <li><a href="#web-workspace">Live Web Studio</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Student Plans</a></li>
+                <li><a href="#legal-policies">Policies & Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="#web-workspace" class="btn btn-outline">Open Web App</a>
+                <a href="#downloads" class="btn btn-teal">Download App</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main>
+        <div class="hero" id="downloads">
+            <div>
+                <span class="chip">AI STUDY DESK • B.TECH, GATE & UNIVERSITY EXAMS</span>
+                <h1>Your Syllabus, Master Tutor, Notes & Slides in One Calm Notebook.</h1>
+                <p class="lead">
+                    Upload any course syllabus or textbook PDF to generate a routine-aware study timetable, learn with
+                    subject-scoped explanations & labeled diagrams, and export editable 16:9 PowerPoint decks.
+                </p>
+
+                <!-- 3-Platform Download & Web App Selector -->
+                <div class="platform-hub">
+                    <div class="platform-hub-title">
+                        <span>CHOOSE YOUR PLATFORM (SYNCED VIA SUPABASE CLOUD)</span>
+                        <span style="color: var(--teal-deep);">v1.1.0 Stable</span>
+                    </div>
+                    <div class="platform-grid">
+                        <!-- 1. Android APK Download -->
+                        <a href="/downloads/Syllabo_Android.apk" download class="platform-card"
+                            onclick="handleDownloadNotice('Android APK', '/downloads/Syllabo_Android.apk')">
+                            <div>
+                                <div class="plat-top">
+                                    <span class="plat-icon">🤖</span>
+                                    <span class="plat-badge">ANDROID .APK</span>
+                                </div>
+                                <div class="plat-name">Download APK</div>
+                                <div class="plat-sub">Android 8.0+ • Voice Alarms & Offline Desk</div>
+                            </div>
+                            <div style="margin-top: 12px; font-size: 12px; font-weight: 800; color: var(--teal-deep);">
+                                ↓ Download .APK (42 MB)
+                            </div>
+                        </a>
+
+                        <!-- 2. Windows Desktop Download -->
+                        <a href="/downloads/Syllabo_Windows_x64.zip" download class="platform-card"
+                            onclick="handleDownloadNotice('Windows Desktop (x64)', '/downloads/Syllabo_Windows_x64.zip')">
+                            <div>
+                                <div class="plat-top">
+                                    <span class="plat-icon">💻</span>
+                                    <span class="plat-badge">WINDOWS 10/11</span>
+                                </div>
+                                <div class="plat-name">Download Windows</div>
+                                <div class="plat-sub">64-Bit Native Desktop • Direct PPTX Launch</div>
+                            </div>
+                            <div style="margin-top: 12px; font-size: 12px; font-weight: 800; color: var(--teal-deep);">
+                                ↓ Download .ZIP / .EXE
+                            </div>
+                        </a>
+
+                        <!-- 3. Web Application -->
+                        <a href="#web-workspace" class="platform-card active-web" onclick="launchWebAppMode()">
+                            <div>
+                                <div class="plat-top">
+                                    <span class="plat-icon">🌐</span>
+                                    <span class="plat-badge">INSTant WEB APP</span>
+                                </div>
+                                <div class="plat-name">Use Web Application</div>
+                                <div class="plat-sub">Zero install • Works on Chrome, Safari & iPad</div>
+                            </div>
+                            <div style="margin-top: 12px; font-size: 12px; font-weight: 800; color: var(--saffron);">
+                                → Launch in Browser Now
+                            </div>
+                        </a>
+                    </div>
+                    <p id="download-helper-msg"
+                        style="display:none; margin-top: 12px; font-size: 12.5px; color: var(--teal-deep); font-weight: 700;">
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right Column: Live Notebook UI Preview -->
+            <div class="hero-preview">
+                <div class="notebook-margin">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <span class="chip chip-teal">MASTER TUTOR • CHAPTER GROUNDED</span>
+                        <span style="font-size:12px; font-weight:700; color:var(--ink-soft);">Subject: Compiler
+                            Design</span>
+                    </div>
+                    <h3 style="font-size: 24px; margin-bottom: 10px;">Symbol Table Implementation in C</h3>
+                    <p style="font-size: 14px; color: var(--ink-soft); margin-bottom: 14px;">
+                        <strong>In simple words:</strong> A Symbol Table is a core data structure used by a compiler to
+                        track identifiers, their data types, scope, and heap memory addresses.
+                    </p>
+                    <div style="background:#1E2430; color:#F8F8F2; padding:12px; border-radius:12px; font-size:12px; margin-bottom:14px;"
+                        class="mono">
+                        #include &lt;stdio.h&gt;<br />
+                        #include &lt;ctype.h&gt;<br />
+                        p = malloc(c); add[x] = p;<br />
+                        printf("\n %c \t %p \t identifier", c, p);
+                    </div>
+                    <div style="font-size:11px; font-weight:800; color:var(--teal-deep); margin-bottom:6px;">
+                        VISUAL EXECUTION FLOWCHART
+                    </div>
+                    <div class="preview-flow-step first">1. Scan Input Expression Until '$' Sentinel</div>
+                    <div class="preview-flow-step">2. Classify Identifier (isalpha) vs Operator</div>
+                    <div class="preview-flow-step">3. Allocate Heap Address & Display Symbol Table</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Built-In Interactive Web Application Workspace -->
+        <section class="section-block" id="web-workspace">
+            <div class="section-header">
+                <span class="chip chip-teal">SYLLABO WEB APPLICATION • LIVE BROWSER STUDIO</span>
+                <h2>Use Syllabo Directly in Your Browser</h2>
+                <p>
+                    Access Master Tutor, AI Slide Deck Studio (.PPTX Export), and Practice Quizzes directly from the
+                    web—or click <strong>Open Full Flutter Web App</strong> if running the compiled Flutter Web build.
+                </p>
+            </div>
+
+            <div class="webapp-shell">
+                <div class="webapp-topbar">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <span style="font-family:'Fraunces',serif; font-weight:800; font-size:20px;">Syllabo Web
+                            Desk</span>
+                        <span class="chip" style="background:rgba(255,255,255,0.14); color:#FFF;">CONNECTED TO
+                            API</span>
+                    </div>
+                    <div class="webapp-tabs">
+                        <button class="webapp-tab active" id="tab-btn-tutor" onclick="switchWebAppTab('tutor')">🎓
+                            Master Tutor & Notes</button>
+                        <button class="webapp-tab" id="tab-btn-slides" onclick="switchWebAppTab('slides')">📊 AI Slide
+                            Studio (.PPTX)</button>
+                        <button class="webapp-tab" id="tab-btn-quiz" onclick="switchWebAppTab('quiz')">📝 Practice
+                            Quiz</button>
+                        <a href="/app/index.html" class="webapp-tab"
+                            style="text-decoration:none; background:var(--teal);">🚀 Full Flutter Web App</a>
+                    </div>
+                </div>
+
+                <div class="webapp-body">
+                    <!-- API Server URL Config Bar -->
+                    <div
+                        style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--rule-line);">
+                        <div style="font-size:12.5px; font-weight:700; color:var(--ink-soft);">
+                            Backend API Endpoint:
+                            <input type="text" id="api-base-url" value="https://syllabo-backend.onrender.com/"
+                                style="padding:5px 10px; border-radius:8px; border:1px solid var(--rule-line); font-size:12.5px; width:240px; margin-left:6px;" />
+                        </div>
+                        <div style="font-size:12px; color:var(--teal-deep); font-weight:700;">
+                            ✓ Synced with Android APK & Windows Desktop
+                        </div>
+                    </div>
+
+                    <!-- TAB 1: MASTER TUTOR -->
+                    <div id="webapp-pane-tutor">
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Subject (e.g. Biology, Compiler Design, C, Java)</label>
+                                <input type="text" id="web-tutor-subject" placeholder="e.g. Biology" value="Biology" />
+                            </div>
+                            <div class="input-group">
+                                <label>Topic or Question</label>
+                                <input type="text" id="web-tutor-topic"
+                                    placeholder="e.g. explain about heart function with a diagram"
+                                    value="explain about heart function with a diagram" />
+                            </div>
+                        </div>
+                        <div class="input-group" style="margin-bottom: 14px;">
+                            <label>Custom Explanation Format (Optional)</label>
+                            <input type="text" id="web-tutor-format"
+                                placeholder="Leave blank for Default 5-Part Master Tutor Format, or specify custom format..." />
+                        </div>
+                        <button class="btn btn-teal" id="btn-run-tutor" onclick="runWebTutor()">
+                            ✨ Explain Topic & Fetch Labeled Diagrams
+                        </button>
+                    </div>
+
+                    <!-- TAB 2: AI SLIDE STUDIO -->
+                    <div id="webapp-pane-slides" style="display:none;">
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Subject</label>
+                                <input type="text" id="web-slides-subject" placeholder="e.g. Biology" value="Biology" />
+                            </div>
+                            <div class="input-group">
+                                <label>Presentation Topic</label>
+                                <input type="text" id="web-slides-topic" placeholder="e.g. Heart Functioning"
+                                    value="Heart Functioning" />
+                            </div>
+                        </div>
+                        <div class="input-group" style="margin-bottom: 14px;">
+                            <label>Custom Slide-by-Slide Chatbot Requirements</label>
+                            <textarea id="web-slides-reqs"
+                                rows="2">Slide 1 overview of heart functioning with diagram, then each slide about one chamber with diagram and bullet points about functioning</textarea>
+                        </div>
+                        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                            <button class="btn btn-teal" id="btn-run-slides" onclick="runWebSlides()">
+                                🎨 Generate Custom Slide Deck & Diagrams
+                            </button>
+                            <button class="btn btn-primary" id="btn-export-pptx" onclick="exportWebPptx()"
+                                style="display:none;">
+                                📥 Download Editable .PPTX Presentation
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- TAB 3: PRACTICE QUIZ -->
+                    <div id="webapp-pane-quiz" style="display:none;">
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Subject</label>
+                                <input type="text" id="web-quiz-subject" placeholder="e.g. Java" value="Java" />
+                            </div>
+                            <div class="input-group">
+                                <label>Topic to Test</label>
+                                <input type="text" id="web-quiz-topic" placeholder="e.g. OOPs Concepts"
+                                    value="OOPs Concepts" />
+                            </div>
+                        </div>
+                        <button class="btn btn-teal" id="btn-run-quiz" onclick="runWebQuiz()">
+                            📝 Generate 5 Interactive MCQs & Flashcards
+                        </button>
+                    </div>
+
+                    <!-- Dynamic Output Area -->
+                    <div id="webapp-output" class="webapp-output"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Features Grid -->
+        <section class="section-block" id="features">
+            <div class="section-header">
+                <span class="chip">BUILT FOR INDIAN ENGINEERING & UNIVERSITY STUDENTS</span>
+                <h2>Everything You Need from First Lecture to Final Exam</h2>
+                <p>Designed around cognitive science and distraction-free notebook ergonomics.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="chip chip-teal">01 • AI TIMETABLE ARCHITECT</span>
+                    <h3>Syllabus PDF to Daily Routine</h3>
+                    <p>Upload any 15MB university or GATE syllabus PDF. Syllabo extracts every unit, estimates study
+                        hours, and schedules study + revision blocks around your wake, meal, and sleep times.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="chip chip-teal">02 • SUBJECT-SCOPED MASTER TUTOR</span>
+                    <h3>Textbook-Grade Explanations & Diagrams</h3>
+                    <p>Clean Unicode formulas (H = I²Rt, Δ = b² - 4ac), bug-free C/Python/Java code with dry-run traces,
+                        interactive flowcharts, and high-resolution labeled diagrams.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="chip chip-teal">03 • AI SLIDE DECK STUDIO</span>
+                    <h3>Custom 16:9 PowerPoint (.PPTX) Exports</h3>
+                    <p>Tell the AI Slide Chatbot exactly how to structure your seminar or viva slides. Preview each
+                        slide with embedded diagrams and export a native <code>.pptx</code> file in one click.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="chip chip-teal">04 • LINED DESK NOTES LIBRARY</span>
+                    <h3>Subject Folders & Margin Annotations</h3>
+                    <p>Every topic you study is automatically organized into Subject Folders with key points, exam
+                        traps, mnemonic hooks, and personal margin notes synced to Supabase.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="chip chip-teal">05 • ACTIVE RECALL & FLASHCARDS</span>
+                    <h3>Subject-Adaptive Practice Quizzes</h3>
+                    <p>Test yourself with Easy, Medium, and Hard MCQs featuring instant step-by-step rationales, exam
+                        hall shortcuts, and tap-to-flip flashcards.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="chip chip-teal">06 • 7-DAY SOAK GATE & VOICE ALARMS</span>
+                    <h3>Spoken Daily Briefings & Retention Tracking</h3>
+                    <p>Native Android voice alarms and spoken morning briefings keep your streak on track while
+                        verifying 7-day long-term memory retention.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Student Pricing Section -->
+        <section class="section-block" id="pricing">
+            <div class="section-header">
+                <span class="chip">TRANSPARENT STUDENT PRICING (INR)</span>
+                <h2>Less Than the Price of a Notebook.</h2>
+                <p>Start free forever, or unlock unlimited AI tutoring, PDF chapter grounding, and .PPTX slide exports
+                    via UPI, Cards, or NetBanking.</p>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Free Plan -->
+                <div class="price-card">
+                    <div>
+                        <span class="chip">STARTER DESK</span>
+                        <h3 style="font-size:22px; margin-top:10px;">Free Starter Plan</h3>
+                        <div class="price-amount">₹0 <span>/ Forever Free</span></div>
+                        <p style="font-size:13px; color:var(--ink-soft);">Essential daily routine planner & spoken voice
+                            reminders.</p>
+                        <ul class="feature-list">
+                            <li>Daily Routine & Exam Timetable Builder</li>
+                            <li>Voice Reminders & Spoken Daily Briefing</li>
+                            <li>2 New AI Tutor Topics per Day</li>
+                            <li>Unlimited Access to Saved Notes</li>
+                            <li>Practice Quizzes & 7-Day Soak Gate</li>
+                        </ul>
+                    </div>
+                    <a href="#downloads" class="btn btn-outline">Included Forever</a>
+                </div>
+
+                <!-- Exam Crunch Pack -->
+                <div class="price-card">
+                    <div>
+                        <span class="chip">EXAM WEEK FAVORITE</span>
+                        <h3 style="font-size:22px; margin-top:10px;">Exam Crunch Pack</h3>
+                        <div class="price-amount">₹29 <span>/ 7 Days Access</span></div>
+                        <p style="font-size:13px; color:var(--ink-soft);">Built for last-minute midterms, lab viva &
+                            internals week.</p>
+                        <ul class="feature-list">
+                            <li>Unlimited AI Tutor Topic Explanations</li>
+                            <li>Full PDF Syllabus & Chapter Breakdown</li>
+                            <li>Private Grounded Lecture Notes Mode</li>
+                            <li>AI Slides Chatbot & .PPTX Deck Exports</li>
+                            <li>Priority Multi-Model AI Routing</li>
+                        </ul>
+                    </div>
+                    <a href="#downloads" class="btn btn-primary">Get 7-Day Pass (₹29)</a>
+                </div>
+
+                <!-- Monthly Semester Pro -->
+                <div class="price-card popular">
+                    <div>
+                        <span class="chip chip-teal">MOST POPULAR</span>
+                        <h3 style="font-size:22px; margin-top:10px;">Monthly Semester Pro</h3>
+                        <div class="price-amount">₹59 <span>/ 30 Days Access</span></div>
+                        <p style="font-size:13px; color:var(--ink-soft);">Complete coverage across all semester
+                            subjects.</p>
+                        <ul class="feature-list">
+                            <li>Everything in Exam Crunch Pack (30 Days)</li>
+                            <li>Unlimited Subject-Scoped Desk Notes & Diagrams</li>
+                            <li>Unlimited AI Slide Decks & Custom Templates</li>
+                            <li>Unlimited Adaptive Quizzes & Flashcards</li>
+                            <li>Cross-Device Desktop ↔ Android Sync</li>
+                        </ul>
+                    </div>
+                    <a href="#downloads" class="btn btn-teal">Upgrade to Monthly (₹59)</a>
+                </div>
+
+                <!-- Yearly GATE & B.Tech Pro -->
+                <div class="price-card">
+                    <div>
+                        <span class="chip">SAVE 44% • BEST VALUE</span>
+                        <h3 style="font-size:22px; margin-top:10px;">Yearly GATE & B.Tech Pro</h3>
+                        <div class="price-amount">₹399 <span>/ 365 Days Access</span></div>
+                        <p style="font-size:13px; color:var(--ink-soft);">Best value for year-round competitive &
+                            university exams.</p>
+                        <ul class="feature-list">
+                            <li>Everything in Monthly Pro for 1 Full Year</li>
+                            <li>Unlimited AI PDF Syllabus & Textbook Parsing</li>
+                            <li>Unlimited Seminar .PPTX Slide Exports</li>
+                            <li>48-Hour Grace Period Protection on Renewals</li>
+                            <li>Instant Plan Recovery Across All Devices</li>
+                        </ul>
+                    </div>
+                    <a href="#downloads" class="btn btn-primary">Upgrade to Yearly (₹399)</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mandatory Razorpay KYC Legal & Compliance Policies -->
+        <section class="section-block" id="legal-policies">
+            <div class="section-header">
+                <span class="chip chip-teal">TRUST, PRIVACY & COMPLIANCE</span>
+                <h2>Legal Policies, DPDP Compliance & Contact Details</h2>
+                <p>Transparent terms compliant with the Digital Personal Data Protection (DPDP) Act, 2023 and
+                    RBI/Razorpay digital payment guidelines.</p>
+            </div>
+
+            <div class="policy-tabs">
+                <button class="policy-tab-btn active" onclick="showPolicyTab('privacy', this)">Privacy Policy
+                    (DPDP)</button>
+                <button class="policy-tab-btn" onclick="showPolicyTab('terms', this)">Terms & Conditions</button>
+                <button class="policy-tab-btn" onclick="showPolicyTab('refund', this)">Refund & Cancellation
+                    Policy</button>
+                <button class="policy-tab-btn" onclick="showPolicyTab('contact', this)">Contact Us & Grievance
+                    Officer</button>
+            </div>
+
+            <!-- 1. Privacy Policy -->
+            <div id="policy-privacy" class="policy-box">
+                <h3>Privacy Policy (India DPDP Act 2023 Compliant)</h3>
+                <p><strong>Effective Date:</strong> October 31, 2026 | <strong>Platform:</strong> Syllabo by Saathi</p>
+                <h4>1. Data We Collect</h4>
+                <p>We collect only the minimum personal data required to provide your study account: your mobile number
+                    or email address for OTP verification, full name, date of birth (to verify age band), educational
+                    stream, and your study syllabi/notes.</p>
+                <h4>2. Under-18 Verifiable Guardian Consent</h4>
+                <p>In strict compliance with the Digital Personal Data Protection (DPDP) Act, 2023 (India), students
+                    under 18 years of age are required to provide Parent/Guardian Name, Guardian Email, and explicit
+                    Guardian Consent during profile onboarding before accessing cloud features.</p>
+                <h4>3. Private Grounded Chapter Mode & Community Vault</h4>
+                <p>Documents uploaded in Private Grounded Mode are scoped strictly to your account. If you opt in to
+                    contribute notes to the Community Knowledge Vault, all personal identifiers (emails, phone numbers,
+                    roll numbers) are automatically stripped prior to distillation.</p>
+                <h4>4. Data Portability & Right to Erasure</h4>
+                <p>You can export 100% of your data as JSON (<code>GET /api/export</code>) or permanently purge your
+                    account and all associated cloud records (<code>DELETE /api/account</code>) at any time from the
+                    <strong>Settings & Privacy</strong> tab inside the app.
+                </p>
+            </div>
+
+            <!-- 2. Terms & Conditions -->
+            <div id="policy-terms" class="policy-box" style="display:none;">
+                <h3>Terms & Conditions of Service</h3>
+                <p><strong>Effective Date:</strong> October 31, 2026</p>
+                <h4>1. Educational Use & AI Accuracy Disclaimer</h4>
+                <p>Syllabo by Saathi provides AI-assisted study timetables, topic explanations, practice quizzes, and
+                    presentation slides. While our multi-model engine verifies outputs against academic rubrics,
+                    students should always cross-check critical formulas and definitions against their official
+                    university or board syllabus.</p>
+                <h4>2. Account Usage & BYOK Keys</h4>
+                <p>Each student account is intended for individual academic use. Users who attach an optional personal
+                    API key (BYOK) are responsible for complying with the terms of their respective AI key provider.</p>
+                <h4>3. Intellectual Property</h4>
+                <p>All notes, annotations, and `.PPTX` presentations generated by you remain yours to use for your
+                    academic coursework, college seminars, and exam preparation.</p>
+            </div>
+
+            <!-- 3. Refund & Cancellation Policy -->
+            <div id="policy-refund" class="policy-box" style="display:none;">
+                <h3>Refund & Cancellation Policy</h3>
+                <p><strong>Effective Date:</strong> October 31, 2026</p>
+                <h4>1. No Auto-Debit Traps</h4>
+                <p>Syllabo student passes (<strong>Exam Crunch Pack ₹29</strong>, <strong>Monthly Semester Pro
+                        ₹59</strong>, and <strong>Yearly Pro ₹399</strong>) are prepaid fixed-duration passes. You will
+                    never be charged automatically without your explicit action, and every paid pass includes a
+                    <strong>48-hour exam-week grace period</strong> upon expiry.
+                </p>
+                <h4>2. Refund Eligibility & Duplicate Charges</h4>
+                <ul>
+                    <li>If your account is debited via UPI/Card/NetBanking and your Pro entitlement is not activated
+                        within 15 minutes (and cannot be restored via the <em>Restore Access</em> button), you are
+                        eligible for an immediate 100% refund or instant manual activation.</li>
+                    <li>Refund requests for unused passes submitted within <strong>48 hours of purchase</strong> are
+                        eligible for a full refund.</li>
+                    <li>Approved refunds are processed via Razorpay back to the original source payment method within
+                        <strong>5–7 working days</strong>.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 4. Contact Us -->
+            <div id="policy-contact" class="policy-box" style="display:none;">
+                <h3>Contact Us & Grievance Redressal</h3>
+                <p>Have a question about your subscription, institutional licensing, or technical support? Reach out to
+                    our team directly:</p>
+                <ul>
+                    <li><strong>Product & Entity Name:</strong> Syllabo by Saathi (Academic Study Systems)</li>
+                    <li><strong>Support Email:</strong> support@syllabo.app</li>
+                    <li><strong>Grievance Officer (DPDP Act):</strong> Uday Kumar — grievance@syllabo.app</li>
+                    <li><strong>Operating Address:</strong> Dilsukhnagar, Hyderabad, Telangana — 500060, India</li>
+                    <li><strong>Support Hours:</strong> Monday to Saturday, 9:00 AM – 7:00 PM IST (Response within 24
+                        hours)</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-inner">
+            <div>
+                <div class="brand-title" style="font-size:22px;">Syllabo <span class="brand-badge">BY SAATHI</span>
+                </div>
+                <p style="font-size:13px; color:var(--ink-soft); margin-top:6px;">
+                    © 2026 Syllabo by Saathi. Built in Hyderabad, India for students everywhere.
+                </p>
+            </div>
+            <ul class="footer-links">
+                <li><a href="#downloads">Android APK</a></li>
+                <li><a href="#downloads">Windows App</a></li>
+                <li><a href="#web-workspace">Web Application</a></li>
+                <li><a onclick="showPolicyFromFooter('privacy')">Privacy Policy</a></li>
+                <li><a onclick="showPolicyFromFooter('terms')">Terms & Conditions</a></li>
+                <li><a onclick="showPolicyFromFooter('refund')">Refund Policy</a></li>
+                <li><a onclick="showPolicyFromFooter('contact')">Contact Us</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <!-- Interactive Web Application & Policy Script -->
+    <script>
+        let lastGeneratedSlides = [];
+        let lastSlideTopic = "";
+        let lastSlideSubject = "";
+
+        function getApiBase() {
+            const el = document.getElementById("api-base-url");
+            return (el && el.value ? el.value.trim() : "https://syllabo-backend.onrender.com/").replace(/\/+$/, "");
+        }
+
+        function handleDownloadNotice(platformName, path) {
+            const msg = document.getElementById("download-helper-msg");
+            msg.style.display = "block";
+            msg.textContent = `Starting ${platformName} download (${path}). Place your compiled release build inside the /downloads folder when deploying!`;
+        }
+
+        function launchWebAppMode() {
+            const section = document.getElementById("web-workspace");
+            if (section) section.scrollIntoView({ behavior: "smooth" });
+        }
+
+        function switchWebAppTab(tab) {
+            ["tutor", "slides", "quiz"].forEach((t) => {
+                document.getElementById(`webapp-pane-${t}`).style.display = (t === tab) ? "block" : "none";
+                const btn = document.getElementById(`tab-btn-${t}`);
+                if (btn) btn.classList.toggle("active", t === tab);
+            });
+        }
+
+        function escapeHtml(str) {
+            return String(str || "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+        }
+
+        async function runWebTutor() {
+            const subject = document.getElementById("web-tutor-subject").value.trim() || "General";
+            const title = document.getElementById("web-tutor-topic").value.trim();
+            const customFormat = document.getElementById("web-tutor-format").value.trim();
+            const out = document.getElementById("webapp-output");
+            const btn = document.getElementById("btn-run-tutor");
+
+            if (!title) return;
+            btn.disabled = true;
+            btn.textContent = "Generating Master Tutor Lesson & Diagrams...";
+            out.className = "webapp-output visible";
+            out.innerHTML = `<p style="font-weight:700; color:var(--teal-deep);">⏳ Querying Syllabo AI Pool for "${escapeHtml(title)}" (${escapeHtml(subject)})...</p>`;
+
+            try {
+                const resp = await fetch(`${getApiBase()}/api/tutor/explain`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-device-id": "web-app-browser-client"
+                    },
+                    body: JSON.stringify({
+                        title: title,
+                        subject: subject,
+                        grounded: false,
+                        custom_format: customFormat || null
+                    })
+                });
+                const data = await resp.json();
+                if (resp.ok && data.explanation) {
+                    const exp = data.explanation;
+                    const imgs = exp.image_urls || [];
+                    let html = `
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+              <h3 style="font-size:24px;">${escapeHtml(exp.topic_title)}</h3>
+              <span class="chip chip-teal">SUBJECT: ${escapeHtml(exp.subject)}</span>
+            </div>
+          `;
+                    if (imgs.length > 0) {
+                        const proxyUrl = `${getApiBase()}/api/images/proxy?url=${encodeURIComponent(imgs[0])}`;
+                        html += `
+              <div style="background:#FFF; border:1.5px solid var(--rule-line); border-radius:14px; padding:12px; margin-bottom:16px; text-align:center;">
+                <div style="font-size:11px; font-weight:800; color:var(--teal-deep); margin-bottom:6px;">HIGH-RESOLUTION LABELED DIAGRAM</div>
+                <img src="${proxyUrl}" alt="Diagram" style="max-height:320px; max-width:100%; object-fit:contain; border-radius:8px;" onerror="this.src='${escapeHtml(imgs[0])}'" />
+              </div>
+            `;
+                    }
+                    (exp.blocks || []).forEach((b) => {
+                        html += `
+              <div style="margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid var(--rule-line);">
+                <h4 style="font-size:18px; color:var(--teal-deep); margin-bottom:6px;">${escapeHtml(b.heading)}</h4>
+                <div style="white-space:pre-wrap; font-size:14.5px;">${escapeHtml(b.body)}</div>
+              </div>
+            `;
+                    });
+                    out.innerHTML = html;
+                } else {
+                    out.innerHTML = `<p style="color:var(--coral); font-weight:700;">Error: ${escapeHtml(data.detail || "Could not generate explanation.")}</p>`;
+                }
+            } catch (err) {
+                out.innerHTML = `<p style="color:var(--coral); font-weight:700;">Could not reach backend at ${escapeHtml(getApiBase())}. Make sure Uvicorn is running!</p>`;
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "✨ Explain Topic & Fetch Labeled Diagrams";
+            }
+        }
+
+        async function runWebSlides() {
+            const subject = document.getElementById("web-slides-subject").value.trim() || "General";
+            const topic = document.getElementById("web-slides-topic").value.trim();
+            const reqs = document.getElementById("web-slides-reqs").value.trim();
+            const out = document.getElementById("webapp-output");
+            const btn = document.getElementById("btn-run-slides");
+            const exportBtn = document.getElementById("btn-export-pptx");
+
+            if (!topic) return;
+            btn.disabled = true;
+            btn.textContent = "Structuring Custom Slides & Diagrams...";
+            out.className = "webapp-output visible";
+            out.innerHTML = `<p style="font-weight:700; color:var(--teal-deep);">⏳ AI Slide Architect is building custom slides & fetching diagrams for "${escapeHtml(topic)}"...</p>`;
+
+            try {
+                const resp = await fetch(`${getApiBase()}/api/slides/generate`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-device-id": "web-app-browser-client"
+                    },
+                    body: JSON.stringify({
+                        topic_title: topic,
+                        subject: subject,
+                        requirements: reqs,
+                        template_id: "academic_seminar",
+                        slide_count: 6
+                    })
+                });
+                const data = await resp.json();
+                if (resp.ok && Array.isArray(data.slides)) {
+                    lastGeneratedSlides = data.slides;
+                    lastSlideTopic = data.topic_title || topic;
+                    lastSlideSubject = data.subject || subject;
+                    exportBtn.style.display = "inline-flex";
+
+                    let html = `
+            <div style="margin-bottom:14px; padding:12px; background:rgba(11,94,87,0.1); border-radius:10px; font-weight:700; color:var(--teal-deep);">
+              ✓ ${escapeHtml(data.architect_summary || `Generated ${data.slides.length} custom slides.`)}
+            </div>
+          `;
+                    data.slides.forEach((s) => {
+                        const imgUrl = s.image_url || (s.image_urls && s.image_urls[0]) || "";
+                        const proxyUrl = imgUrl ? `${getApiBase()}/api/images/proxy?url=${encodeURIComponent(imgUrl)}` : "";
+                        const bulletsHtml = (s.bullets || []).map((b) => `<li style="margin-bottom:6px;">${escapeHtml(b)}</li>`).join("");
+                        html += `
+              <div style="background:var(--paper-3); border:1.5px solid var(--rule-line); border-radius:16px; padding:18px; margin-bottom:14px; display:grid; grid-template-columns:${proxyUrl ? '1.4fr 0.8fr' : '1fr'}; gap:16px; align-items:start;">
+                <div>
+                  <span class="chip">SLIDE ${escapeHtml(s.slide_number)}</span>
+                  <h4 style="font-size:20px; margin:8px 0 4px;">${escapeHtml(s.title)}</h4>
+                  ${s.subtitle ? `<div style="font-size:13px; font-weight:700; color:var(--teal-deep); margin-bottom:8px;">${escapeHtml(s.subtitle)}</div>` : ""}
+                  <ul style="padding-left:18px; font-size:14.5px;">${bulletsHtml}</ul>
+                </div>
+                ${proxyUrl ? `
+                  <div style="background:#FFF; border:1px solid var(--rule-line); border-radius:12px; padding:8px; text-align:center;">
+                    <div style="font-size:10px; font-weight:800; color:var(--teal-deep); margin-bottom:4px;">SLIDE DIAGRAM</div>
+                    <img src="${proxyUrl}" alt="Slide Diagram" style="max-height:170px; max-width:100%; object-fit:contain;" onerror="this.src='${escapeHtml(imgUrl)}'" />
+                  </div>
+                ` : ""}
+              </div>
+            `;
+                    });
+                    out.innerHTML = html;
+                }
+            } catch (err) {
+                out.innerHTML = `<p style="color:var(--coral); font-weight:700;">Could not reach backend at ${escapeHtml(getApiBase())}.</p>`;
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "🎨 Generate Custom Slide Deck & Diagrams";
+            }
+        }
+
+        async function exportWebPptx() {
+            if (!lastGeneratedSlides.length) return;
+            const btn = document.getElementById("btn-export-pptx");
+            btn.disabled = true;
+            btn.textContent = "Building .PPTX File...";
+            try {
+                const resp = await fetch(`${getApiBase()}/api/slides/export`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-device-id": "web-app-browser-client"
+                    },
+                    body: JSON.stringify({
+                        topic_title: lastSlideTopic,
+                        subject: lastSlideSubject,
+                        template_id: "academic_seminar",
+                        slides: lastGeneratedSlides
+                    })
+                });
+                if (resp.ok) {
+                    const blob = await resp.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = `${lastSlideTopic.replace(/[^a-zA-Z0-9]+/g, "_")}_Slides.pptx`;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                }
+            } catch (_) { }
+            btn.disabled = false;
+            btn.textContent = "📥 Download Editable .PPTX Presentation";
+        }
+
+        async function runWebQuiz() {
+            const subject = document.getElementById("web-quiz-subject").value.trim() || "General";
+            const title = document.getElementById("web-quiz-topic").value.trim();
+            const out = document.getElementById("webapp-output");
+            const btn = document.getElementById("btn-run-quiz");
+
+            if (!title) return;
+            btn.disabled = true;
+            btn.textContent = "Generating Practice Quiz...";
+            out.className = "webapp-output visible";
+            out.innerHTML = `<p style="font-weight:700; color:var(--teal-deep);">⏳ Generating 5 adaptive MCQs for "${escapeHtml(title)}"...</p>`;
+
+            try {
+                const resp = await fetch(`${getApiBase()}/api/quiz/generate`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-device-id": "web-app-browser-client"
+                    },
+                    body: JSON.stringify({
+                        title: title,
+                        subject: subject,
+                        question_count: 5
+                    })
+                });
+                const data = await resp.json();
+                if (resp.ok && data.quiz && Array.isArray(data.quiz.questions)) {
+                    let html = `<h3 style="font-size:22px; margin-bottom:14px;">Practice Quiz: ${escapeHtml(data.quiz.topic_title)}</h3>`;
+                    data.quiz.questions.forEach((q, idx) => {
+                        const opts = (q.options || []).map((o, oIdx) => `
+              <div style="padding:8px 12px; margin-bottom:6px; border-radius:8px; border:1px solid var(--rule-line); background:${oIdx === q.correct_index ? 'rgba(11,94,87,0.12)' : 'var(--paper-2)'}; font-weight:${oIdx === q.correct_index ? '700' : '500'};">
+                ${String.fromCharCode(65 + oIdx)}. ${escapeHtml(o)} ${oIdx === q.correct_index ? ' ✓' : ''}
+              </div>
+            `).join("");
+                        html += `
+              <div style="margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid var(--rule-line);">
+                <div style="font-weight:700; margin-bottom:8px;">Q${idx + 1} (${escapeHtml(q.difficulty)}): ${escapeHtml(q.question)}</div>
+                ${opts}
+                <div style="font-size:13px; color:var(--teal-deep); margin-top:6px;"><strong>Rationale:</strong> ${escapeHtml(q.explanation)}</div>
+              </div>
+            `;
+                    });
+                    out.innerHTML = html;
+                }
+            } catch (_) {
+                out.innerHTML = `<p style="color:var(--coral); font-weight:700;">Could not reach backend at ${escapeHtml(getApiBase())}.</p>`;
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "📝 Generate 5 Interactive MCQs & Flashcards";
+            }
+        }
+
+        function showPolicyTab(tabId, btnEl) {
+            ["privacy", "terms", "refund", "contact"].forEach((id) => {
+                document.getElementById(`policy-${id}`).style.display = (id === tabId) ? "block" : "none";
+            });
+            document.querySelectorAll(".policy-tab-btn").forEach((b) => b.classList.remove("active"));
+            if (btnEl) btnEl.classList.add("active");
+        }
+
+        function showPolicyFromFooter(tabId) {
+            const buttons = document.querySelectorAll(".policy-tab-btn");
+            const mapIdx = { privacy: 0, terms: 1, refund: 2, contact: 3 };
+            showPolicyTab(tabId, buttons[mapIdx[tabId]]);
+            document.getElementById("legal-policies").scrollIntoView({ behavior: "smooth" });
+        }
+    </script>
+</body>
+
+</html>
