@@ -1193,6 +1193,9 @@
 
     <!-- Interactive Web Application & Policy Script -->
     <script>
+        // Silently warm up Render backend as soon as the Vercel page loads
+        fetch("https://syllabo-backend.onrender.com/api/health", { mode: "no-cors" }).catch(() => {});
+
         let lastGeneratedSlides = [];
         let lastSlideTopic = "";
         let lastSlideSubject = "";
